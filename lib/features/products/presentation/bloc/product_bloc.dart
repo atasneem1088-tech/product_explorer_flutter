@@ -54,10 +54,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<LoadFavouriteProducts>(_loadFavourites);
   }
 
-  // =========================
-  // GET FAVOURITE IDS
-  // =========================
-
   Future<Set<int>> _getFavouriteIds() async {
     final favouriteProducts = await getFavouriteProducts();
 
@@ -65,10 +61,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         .map((product) => product.id)
         .toSet();
   }
-
-  // =========================
-  // LOAD FIRST PRODUCTS
-  // =========================
 
   Future<void> _loadProducts(
     LoadProducts event,
@@ -99,11 +91,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       );
     }
   }
-
-  // =========================
-  // PAGINATION
-  // =========================
-
   Future<void> _loadMoreProducts(
     LoadMoreProducts event,
     Emitter<ProductState> emit,
@@ -145,10 +132,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     }
   }
 
-  // =========================
-  // SEARCH
-  // =========================
-
   Future<void> _searchProducts(
     SearchProductsEvents event,
     Emitter<ProductState> emit,
@@ -176,10 +159,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     }
   }
 
-  // =========================
-  // CATEGORIES
-  // =========================
-
   Future<void> _loadCategories(
     LoadCategories event,
     Emitter<ProductState> emit,
@@ -196,10 +175,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       );
     }
   }
-
-  // =========================
-  // CATEGORY FILTER
-  // =========================
 
   Future<void> _filterByCategory(
     FilterProductsByCategory event,
@@ -228,10 +203,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     }
   }
 
-  // =========================
-  // PRODUCT DETAILS
-  // =========================
-
   Future<void> _loadDetails(
     LoadProductDetails event,
     Emitter<ProductState> emit,
@@ -252,10 +223,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       );
     }
   }
-
-  // =========================
-  // FAVOURITE
-  // =========================
 
   Future<void> _toggleFavourite(
     ToggleFavourite event,
@@ -299,9 +266,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     }
   }
 
-  // =========================
-  // LOAD FAVOURITE PRODUCTS
-  // =========================
 
   Future<void> _loadFavourites(
     LoadFavouriteProducts event,

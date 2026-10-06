@@ -27,13 +27,9 @@ class _ProductsPageState extends State<ProductsPage> {
   void initState() {
     super.initState();
 
-    // ================= FIRST PRODUCTS =================
-
     context.read<ProductBloc>().add(
       LoadProducts(),
     );
-
-    // ================= PAGINATION =================
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
@@ -60,8 +56,6 @@ class _ProductsPageState extends State<ProductsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            // ================= HEADER =================
 
             Padding(
               padding: const EdgeInsets.fromLTRB(
@@ -106,8 +100,6 @@ class _ProductsPageState extends State<ProductsPage> {
                     ],
                   ),
 
-                  // ================= FAVOURITES BUTTON =================
-
                   GestureDetector(
                     onTap: () async {
                       await Navigator.push(
@@ -142,19 +134,13 @@ class _ProductsPageState extends State<ProductsPage> {
               ),
             ),
 
-            // ================= SEARCH =================
-
             const SearchBarWidget(),
 
             const SizedBox(height: 4),
 
-            // ================= CATEGORIES =================
-
             const CategoryFilter(),
 
             const SizedBox(height: 16),
-
-            // ================= PRODUCTS =================
 
             Expanded(
               child: BlocBuilder<ProductBloc, ProductState>(
@@ -165,13 +151,9 @@ class _ProductsPageState extends State<ProductsPage> {
 
                 builder: (context, state) {
 
-                  // ================= LOADING =================
-
                   if (state is ProductLoading) {
                     return const LoadingWidget();
                   }
-
-                  // ================= ERROR =================
 
                   if (state is ProductError) {
                     return ProductErrorWidget(
@@ -179,11 +161,7 @@ class _ProductsPageState extends State<ProductsPage> {
                     );
                   }
 
-                  // ================= PRODUCTS =================
-
                   if (state is ProductLoaded) {
-
-                    // ================= EMPTY =================
 
                     if (state.products.isEmpty) {
                       return const EmptyWidget(

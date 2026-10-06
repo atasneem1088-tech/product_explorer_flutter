@@ -1,14 +1,15 @@
 import 'package:dio/dio.dart';
 
 import '../errors/exceptions.dart';
+import '../constants/app_constants.dart';
 
 class DioClient {
   static Dio create() {
     final dio = Dio(
       BaseOptions(
-        baseUrl: 'https://dummyjson.com',
-        connectTimeout: const Duration(seconds: 10),
-        receiveTimeout: const Duration(seconds: 10),
+        baseUrl: AppConstants.baseUrl,
+        connectTimeout: const Duration(seconds: AppConstants.connectTimeout),
+        receiveTimeout: const Duration(seconds: AppConstants.receiveTimeout),
         headers: {
           'Content-Type': 'application/json',
         },

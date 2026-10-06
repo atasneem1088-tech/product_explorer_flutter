@@ -1,4 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tes/core/constants/app_constants.dart';
 
 class FavouriteLocalDataSource {
   final SharedPreferences preferences;//acutal localstorage ko access krn lye
@@ -10,7 +11,11 @@ class FavouriteLocalDataSource {
   static const String favouriteKey = 'favourite_products';//products ko key ke andr save krna
 
   Future<List<int>> getFavouriteIds() async {
-    final ids = preferences.getStringList(favouriteKey) ?? [];
+      final ids =
+        preferences.getStringList(
+          AppConstants.favouriteProductsKey,
+        ) ??
+        [];
 
     return ids
         .map((id) => int.parse(id))
