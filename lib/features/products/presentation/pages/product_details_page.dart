@@ -27,20 +27,14 @@ class _ProductDetailsPageState
     super.initState();
 
     context.read<ProductBloc>().add(
-      LoadProductDetails(
-        productId: widget.productId,
-      ),
-    );
+  LoadProductDetails(productId: 99999),
+);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF7F3ED),
-
-      // ============================================================
-      // APP BAR
-      // ============================================================
 
       appBar: AppBar(
         backgroundColor: const Color(0xFFF7F3ED),
@@ -55,14 +49,8 @@ class _ProductDetailsPageState
         ),
       ),
 
-      // ============================================================
-      // BODY
-      // ============================================================
-
       body: BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
-
-          // ================= LOADING =================
 
           if (state is ProductDetailsLoading) {
             return const Center(
@@ -71,8 +59,6 @@ class _ProductDetailsPageState
               ),
             );
           }
-
-          // ================= ERROR =================
 
           if (state is ProductDetailsError) {
             return Center(
@@ -89,8 +75,6 @@ class _ProductDetailsPageState
             );
           }
 
-          // ================= PRODUCT LOADED =================
-
           if (state is ProductDetailsLoaded) {
             final product = state.product;
 
@@ -98,11 +82,7 @@ class _ProductDetailsPageState
               child: Column(
                 crossAxisAlignment:
                     CrossAxisAlignment.start,
-                children: [
-
-                  // ============================================================
-                  // IMAGE
-                  // ============================================================
+               children: [
 
                   Container(
                     height: 330,
@@ -134,9 +114,6 @@ class _ProductDetailsPageState
                     ),
                   ),
 
-                  // ============================================================
-                  // CONTENT
-                  // ============================================================
 
                   Padding(
                     padding: const EdgeInsets.fromLTRB(
@@ -150,7 +127,6 @@ class _ProductDetailsPageState
                           CrossAxisAlignment.start,
                       children: [
 
-                        // ================= CATEGORY =================
 
                         Text(
                           product.category,
@@ -162,8 +138,6 @@ class _ProductDetailsPageState
 
                         const SizedBox(height: 6),
 
-                        // ================= TITLE =================
-
                         Text(
                           product.title,
                           style: const TextStyle(
@@ -174,8 +148,6 @@ class _ProductDetailsPageState
                         ),
 
                         const SizedBox(height: 12),
-
-                        // ================= RATING + STOCK =================
 
                         Row(
                           children: [
@@ -226,8 +198,6 @@ class _ProductDetailsPageState
 
                         const SizedBox(height: 18),
 
-                        // ================= PRICE =================
-
                         Text(
                           '\$${product.price}',
                           style: const TextStyle(
@@ -238,10 +208,6 @@ class _ProductDetailsPageState
                         ),
 
                         const SizedBox(height: 24),
-
-                        // ============================================================
-                        // DESCRIPTION
-                        // ============================================================
 
                         const Text(
                           'Description',
@@ -264,11 +230,6 @@ class _ProductDetailsPageState
                         ),
 
                         const SizedBox(height: 24),
-
-                        // ============================================================
-                        // PRODUCT INFORMATION
-                        // ============================================================
-
                         const Text(
                           'Product Information',
                           style: TextStyle(
@@ -315,10 +276,6 @@ class _ProductDetailsPageState
                         ),
 
                         const SizedBox(height: 18),
-
-                        // ============================================================
-                        // REVIEWS
-                        // ============================================================
 
                         const Text(
                           'Reviews',
@@ -368,7 +325,6 @@ class _ProductDetailsPageState
             );
           }
 
-          // ================= INITIAL =================
 
           return const Center(
             child: Text(
@@ -383,10 +339,6 @@ class _ProductDetailsPageState
     );
   }
 }
-
-// ============================================================
-// INFO TILE
-// ============================================================
 
 class _InfoTile extends StatelessWidget {
   final String title;
@@ -437,10 +389,6 @@ class _InfoTile extends StatelessWidget {
   }
 }
 
-// ============================================================
-// REVIEW CARD
-// ============================================================
-
 class _ReviewCard extends StatelessWidget {
   final Review review;
 
@@ -463,8 +411,6 @@ class _ReviewCard extends StatelessWidget {
         crossAxisAlignment:
             CrossAxisAlignment.start,
         children: [
-
-          // ================= RATING =================
 
           Row(
             children: [
@@ -489,8 +435,6 @@ class _ReviewCard extends StatelessWidget {
 
           const SizedBox(height: 10),
 
-          // ================= COMMENT =================
-
           Text(
             review.comment,
             maxLines: 3,
@@ -504,7 +448,6 @@ class _ReviewCard extends StatelessWidget {
 
           const SizedBox(height: 10),
 
-          // ================= REVIEWER =================
 
           Text(
             review.reviewerName,

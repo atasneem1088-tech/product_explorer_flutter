@@ -15,14 +15,12 @@ class FavouriteButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-
       onTap: () {
         context.read<ProductBloc>().add(
-          ToggleFavourite(
-            productId: productId,
-          ),
-        );
+              ToggleFavourite(
+                productId: productId,
+              ),
+            );
       },
 
       child: Container(
@@ -32,7 +30,6 @@ class FavouriteButton extends StatelessWidget {
           color: Colors.white,
           shape: BoxShape.circle,
         ),
-
         child: const Icon(
           Icons.favorite_border,
         ),

@@ -13,10 +13,10 @@ class CategoryFilter extends StatefulWidget {
 }
 
 class _CategoryFilterState extends State<CategoryFilter> {
-  final ScrollController _scroll = ScrollController();
+  final ScrollController _scroll = ScrollController();//horizaontal listview ko control krega
 
-  String? selectedCategory;
-  List<String> _categories = [];
+  String? selectedCategory;//currently konsi category selected he
+  List<String> _categories = [];//api se category ayege aur list me save hogi
 
   bool _canLeft = false;
   bool _canRight = true;
@@ -34,11 +34,11 @@ class _CategoryFilterState extends State<CategoryFilter> {
     super.dispose();
   }
 
-  void _updateArrows() {
-    if (!_scroll.hasClients) return;
+  void _updateArrows() {//ye check krega k left aur right scroll possible he
+    if (!_scroll.hasClients) return;//ScrollController abhi ListView ke saath attached nahi hai, to function yahin stop.
 
     final p = _scroll.position;
-    final left = p.pixels > 0;
+    final left = p.pixels > 0;//Agar current position 0 se zyada hai:left scroll possible hai.
     final right = p.pixels < p.maxScrollExtent - 1;
 
     if (left != _canLeft || right != _canRight) {
@@ -49,11 +49,13 @@ class _CategoryFilterState extends State<CategoryFilter> {
     }
   }
 
-  void _scrollBy(double delta) {
+  void _scrollBy(double delta) {//Ye function list ko left/right move karega.
     if (!_scroll.hasClients) return;
 
     final target = (_scroll.offset + delta)
-        .clamp(0.0, _scroll.position.maxScrollExtent);
+        .clamp(0.0, _scroll.position.maxScrollExtent);//ensure karta hai ke position:0 → maxScrollExtent
+
+//ke bahar na jaye.
 
     _scroll.animateTo(
       target,
@@ -88,10 +90,10 @@ class _CategoryFilterState extends State<CategoryFilter> {
     );
   }
 
-  Widget _chip({
-    required String label,
-    required bool isSelected,
-    required VoidCallback onTap,
+  Widget _chip({//Ye category ka chip/button banata hai.
+    required String label,//Chip ke andar text.
+    required bool isSelected,//Ye batata hai category selected hai ya nahi.
+    required VoidCallback onTap,//
   }) {
     return GestureDetector(
       onTap: onTap,
