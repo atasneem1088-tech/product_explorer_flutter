@@ -1,10 +1,10 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'core/network/dio_client.dart';
+
 import 'features/products/data/datasources/favourite_local_datasource.dart';
-import 'features/products/data/datasources/product_remote_datasource.dart';
 import 'features/products/data/repositories/product_repository_impl.dart';
 
 import 'features/products/domain/repositories/product_repository.dart';
@@ -26,23 +26,12 @@ Future<void> main() async {
   final sharedPreferences =
       await SharedPreferences.getInstance();
 
-  final dio = Dio(
-    BaseOptions(
-      baseUrl: 'https://dummyjson.com',
-    ),
-  );
-
-  final remoteDataSource = ProductRemoteDataSource(
-    dio: dio,
-  );
-
   final localDataSource = FavouriteLocalDataSource(
     preferences: sharedPreferences,
   );
 
   final ProductRepository productRepository =
       ProductRepositoryImpl(
-    remoteDataSource: remoteDataSource,
     localDataSource: localDataSource,
   );
 
@@ -68,32 +57,25 @@ class MyApp extends StatelessWidget {
         getProducts: GetProducts(
           repository: productRepository,
         ),
-
         getCategories: GetCategories(
           repository: productRepository,
         ),
-
         searchProducts: SearchProducts(
           productRepository,
         ),
-
         getProductDetails: GetProductDetails(
           repository: productRepository,
         ),
-
         getProductsByCategory: GetProductsByCategory(
           repository: productRepository,
         ),
-
         toggleFavourite: ToggleFavourite(
           repository: productRepository,
         ),
-
         getFavouriteProducts: GetFavouriteProducts(
           repository: productRepository,
         ),
       ),
-
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Product Explorer',

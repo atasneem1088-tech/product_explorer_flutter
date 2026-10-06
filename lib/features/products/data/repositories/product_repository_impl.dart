@@ -1,23 +1,35 @@
+import 'package:tes/core/network/dio_client.dart';
+
 import 'package:tes/features/products/data/datasources/favourite_local_datasource.dart';
 import 'package:tes/features/products/data/datasources/product_remote_datasource.dart';
+
 import 'package:tes/features/products/domain/entities/product.dart';
 import 'package:tes/features/products/domain/repositories/product_repository.dart';
 
 class ProductRepositoryImpl implements ProductRepository {
-  final ProductRemoteDataSource remoteDataSource;
   final FavouriteLocalDataSource localDataSource;
 
+  late final ProductRemoteDataSource remoteDataSource;
+
   ProductRepositoryImpl({
-    required this.remoteDataSource,
     required this.localDataSource,
-  });
+  }) {
+    final dio = DioClient.create();
+
+    remoteDataSource = ProductRemoteDataSource(
+      dio: dio,
+    );
+  }
 
   @override
   Future<List<Product>> getProducts({
     int limit = 20,
     int skip = 0,
   }) {
-    return remoteDataSource.getProducts(limit: limit, skip: skip);
+    return remoteDataSource.getProducts(
+      limit: limit,
+      skip: skip,
+    );
   }
 
   @override
@@ -36,7 +48,9 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
-  Future<List<Product>> getProductsByCategory(String category) {
+  Future<List<Product>> getProductsByCategory(
+    String category,
+  ) {
     return remoteDataSource.getProductsByCategory(category);
   }
 
@@ -46,18 +60,21 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
-Future<List<int>> getFavouriteIds() {
-  return localDataSource.getFavouriteIds();
-}
+  Future<List<int>> getFavouriteIds() {
+    return localDataSource.getFavouriteIds();
+  }
 
   @override
   Future<List<Product>> getFavouriteProducts() async {
-    final favouriteIds = await localDataSource.getFavouriteIds();
+    final favouriteIds =
+        await localDataSource.getFavouriteIds();
 
     final products = <Product>[];
 
     for (final id in favouriteIds) {
-      final product = await remoteDataSource.getProductDetails(id);
+      final product =
+          await remoteDataSource.getProductDetails(id);
+
       products.add(product);
     }
 
